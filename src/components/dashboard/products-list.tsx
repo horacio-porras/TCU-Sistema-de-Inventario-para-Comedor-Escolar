@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -18,7 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { categoryInfo, products as allProducts } from "@/lib/data";
+import { categoryInfo } from "@/lib/data";
+import { getProductsClient } from "@/lib/firestore-client";
 import { CATEGORIES, type Product, type Category } from "@/lib/definitions";
 import { Search } from "lucide-react";
 import { AddProductSheet } from "./add-product-sheet";
@@ -28,8 +29,25 @@ const ALERT_THRESHOLD = 20;
 export function ProductsList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredProducts = allProducts
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        setLoading(true);
+        const fetchedProducts = await getProductsClient();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Error loading products:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  const filteredProducts = products
     .filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -62,7 +80,9 @@ export function ProductsList() {
               ))}
             </SelectContent>
           </Select>
-          <AddProductSheet />
+          <AddProductSheet onProductAdded={() => {
+            getProductsClient().then(setProducts).catch(console.error);
+          }} />
         </div>
       </div>
       <div className="rounded-lg border shadow-sm">
@@ -77,7 +97,13 @@ export function ProductsList() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredProducts.length > 0 ? (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={5} className="h-24 text-center">
+                  Cargando productos...
+                </TableCell>
+              </TableRow>
+            ) : filteredProducts.length > 0 ? (
               filteredProducts.map((product) => {
                 const CategoryIcon = categoryInfo[product.category].icon;
                 const isLowStock = product.quantity < ALERT_THRESHOLD;

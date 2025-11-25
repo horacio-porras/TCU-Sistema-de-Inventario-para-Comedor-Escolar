@@ -1,5 +1,6 @@
 
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Card,
   CardContent,
@@ -10,7 +11,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { UtensilsCrossed } from 'lucide-react';
 
 export default function LoginPage() {
   return (
@@ -19,10 +19,16 @@ export default function LoginPage() {
         <Card className="shadow-2xl">
           <CardHeader className="space-y-1 text-center">
             <div className="flex justify-center pb-4">
-              <UtensilsCrossed className="h-10 w-10 text-primary" />
+              <Image 
+                src="/logo.png" 
+                alt="Logo" 
+                width={128} 
+                height={128} 
+                className="object-contain"
+              />
             </div>
             <CardTitle className="text-2xl font-bold tracking-tight font-headline">
-              School Canteen Inventory
+              Inventario de Comedor Escolar
             </CardTitle>
             <CardDescription>
               Acceso para personal autorizado
