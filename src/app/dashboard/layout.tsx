@@ -6,10 +6,10 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import Image from "next/image";
 import { MainNav } from "@/components/dashboard/main-nav";
 import { UserNav } from "@/components/dashboard/user-nav";
 import { AuthGuard } from "@/components/auth/auth-guard";
-import { UtensilsCrossed } from "lucide-react";
 
 export default function DashboardLayout({
   children,
@@ -22,9 +22,15 @@ export default function DashboardLayout({
         <Sidebar>
           <SidebarHeader className="p-4">
             <div className="flex items-center gap-2">
-              <UtensilsCrossed className="size-7 text-primary" />
+              <Image
+                src="/logo.png"
+                alt="Logo del comedor"
+                width={28}
+                height={28}
+                className="size-7 object-contain"
+              />
               <h1 className="text-lg font-semibold tracking-tight text-sidebar-foreground group-data-[collapsible=icon]:hidden">
-                Inventario
+                Inventario Comedor
               </h1>
             </div>
           </SidebarHeader>

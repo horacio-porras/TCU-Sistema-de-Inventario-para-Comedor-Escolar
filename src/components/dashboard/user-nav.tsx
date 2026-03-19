@@ -19,15 +19,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { auth } from "@/lib/firebase";
 
 export function UserNav() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const userAvatar = PlaceHolderImages.find(p => p.id === 'user-avatar-1');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -61,10 +59,12 @@ export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-          <Avatar className="h-9 w-9">
-            {userAvatar && <AvatarImage src={userAvatar.imageUrl} alt="User Avatar" data-ai-hint={userAvatar.imageHint}/>}
-            <AvatarFallback>
+        <Button
+          variant="ghost"
+          className="group relative h-9 w-9 rounded-full bg-transparent hover:bg-transparent active:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+        >
+          <Avatar className="h-9 w-9 transition-transform duration-200 group-hover:scale-[1.02] group-data-[state=open]:scale-[1.02]">
+            <AvatarFallback className="bg-sidebar/90 text-sidebar-foreground transition-all duration-200 group-hover:bg-sidebar/80 group-hover:shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))] group-data-[state=open]:bg-sidebar/80 group-data-[state=open]:shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]">
               <User />
             </AvatarFallback>
           </Avatar>

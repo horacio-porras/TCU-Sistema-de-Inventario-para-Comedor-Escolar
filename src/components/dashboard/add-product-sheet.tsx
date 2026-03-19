@@ -104,7 +104,7 @@ export function AddProductSheet({ onProductAdded }: AddProductSheetProps) {
           Registrar Producto
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="border-border bg-card text-foreground">
         <form onSubmit={handleSubmit}>
           <SheetHeader>
             <SheetTitle>Registrar Nuevo Producto</SheetTitle>
@@ -120,7 +120,7 @@ export function AddProductSheet({ onProductAdded }: AddProductSheetProps) {
               <Input
                 id="name"
                 placeholder="Ej. Manzanas"
-                className="col-span-3"
+                className="col-span-3 border-border bg-slate-100/70 text-foreground"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -131,7 +131,7 @@ export function AddProductSheet({ onProductAdded }: AddProductSheetProps) {
                 Categoría
               </Label>
               <Select value={category} onValueChange={(value) => setCategory(value as Category)}>
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-3 border-border bg-slate-100/70 text-foreground">
                   <SelectValue placeholder="Seleccione una categoría" />
                 </SelectTrigger>
                 <SelectContent>
@@ -151,7 +151,7 @@ export function AddProductSheet({ onProductAdded }: AddProductSheetProps) {
                 id="quantity"
                 type="number"
                 placeholder="0"
-                className="col-span-3"
+                className="col-span-3 border-border bg-slate-100/70 text-foreground"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 min="0"
@@ -168,7 +168,7 @@ export function AddProductSheet({ onProductAdded }: AddProductSheetProps) {
                     type="button"
                     variant={"outline"}
                     className={cn(
-                      "col-span-3 justify-start text-left font-normal",
+                      "col-span-3 justify-start border-border bg-slate-100/70 text-left font-normal text-foreground hover:bg-slate-200 hover:text-foreground",
                       !date && "text-muted-foreground"
                     )}
                   >

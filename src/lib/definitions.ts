@@ -6,6 +6,20 @@ export type Product = {
   category: Category;
   quantity: number;
   expirationDate: string; // ISO string date
+  archived?: boolean;
+  archivedAt?: string | null;
+};
+
+export type StockMovementType = "entrada" | "salida";
+
+export type StockMovement = {
+  id: string;
+  type: StockMovementType;
+  quantity: number;
+  note: string;
+  previousQuantity: number;
+  newQuantity: number;
+  createdAt: string;
 };
 
 export const CATEGORIES = [
